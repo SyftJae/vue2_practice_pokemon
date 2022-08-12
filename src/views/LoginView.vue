@@ -1,11 +1,14 @@
 <template>
-<div>
-  <h2>Login</h2>
-  <form @submit.prevent ="login">
-    <input v-model="usernameInput" placeholder="Username"/>
-    <button>Login</button>
-  </form>
-</div>
+<v-row justify="center">
+  <v-card outlined elevation="2" max-height="35%" max-width="30%">
+    <v-card-title>Login</v-card-title>
+    <form @submit.prevent ="login">
+      <input v-model="usernameInput" placeholder="Username"/>
+      <v-card-actions>Login</v-card-actions>
+    </form>
+  </v-card>
+</v-row>
+
 </template>
 
 <script>

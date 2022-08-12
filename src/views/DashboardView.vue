@@ -8,42 +8,21 @@
 
 <script>
 import { SearchCard, ListCard } from '../components'
-import { teamFirestore } from '@/firebase/functions'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: "DashboardView",
-  data: () => ({
-    team: [],
-  }),
+  data: () => ({}),
   components: { SearchCard, ListCard },
+  computed: mapState({
+    team: (state) => state.team,
+  }),
   methods: {
-    async addPokemonToTeam(pokemon) {
-      if(this.team.length < 6) {
-        let doc = await teamFirestore.addPokemonToTeam(pokemon)
-        this.team.push({
-          ...doc
-        })
-      }
-    },
-
-    async removePokemonFromTeam(pokemon) {
-      await teamFirestore.removePokemonFromTeam(pokemon)
-      this.team = this.team.filter((p) => {
-        return p.docId != pokemon.docId
-      })
-    },     
-
-    async getTeam() {
-      let querySnapshot = await teamFirestore.getTeam()
-      let temp = []
-      querySnapshot.forEach((doc) => {
-        temp.push({
-          'docId': doc.id,
-          ...doc.data()
-        })
-      })
-      this.team = [...temp]
-    }, 
+    ...mapActions([
+      'addPokemonToTeam',
+      'removePokemonFromTeam',
+      'getTeam'
+    ])
   },
   mounted() {
     this.getTeam()
