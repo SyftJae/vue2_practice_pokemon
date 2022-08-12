@@ -1,11 +1,11 @@
 <template>
   <div>
     <h2>Search Pokemon:</h2>
-    <form @submit.prevent ="searchPokemonInput">
-        <input v-model="searchPokemon" placeholder="Pokemon"/>
+    <form @submit.prevent="searchPokemon(searchPokemonInput)">
+        <input v-model="searchPokemonInput" placeholder="Pokemon"/>
         <button>Search</button>
     </form>
-    <form v-if="pokemon" @submit.prevent ="$emit('addPokemonToTeam', pokemon)">
+    <form v-if="pokemon" @submit.prevent="$emit('add-pokemon-to-team', pokemon)">
       {{ pokemon.id }}
       {{ pokemon.name }}
       <button>Add to Team</button>
@@ -14,32 +14,25 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
 
 export default {
   name: "SearchCard",
-  data: () => ({})
-}
+  data: () => ({
+      pokemon: {},
+      searchPokemonInput: "",
+      pokeUrl: 'https://pokeapi.co/api/v2/pokemon/',
+  }),
+  methods: {
+    async searchPokemon(query) {
+      if (query) {
+        const res = await fetch(this.pokeUrl + query)
+        this.pokemon = await res.json()
+      }
+    }
+  },
 
-const emits = defineEmits(['addPokemonToTeam'])
-
-const url = 'https://pokeapi.co/api/v2/pokemon/'
-
-const searchPokemon = ref('')
-const pokemon = ref({})
-
-async function fetchPokemon(search) {
-  const res = await fetch(url + search)
-  pokemon.value = await res.json()
-}
-
-async function searchPokemonInput() {
-  if (searchPokemon.value) {
-    await fetchPokemon(searchPokemon.value)
+  mounted() {
+    this.searchPokemon(1)
   }
-}
-
-onMounted(async () => {
-  await fetchPokemon('1')
-})
+} 
 </script>

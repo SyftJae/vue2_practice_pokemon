@@ -11,7 +11,7 @@
             {{ type.type.name }}
           </li>
         </ul>
-        <button @click="$emit('removePokemonFromTeam', pokemon)">X</button>
+        <button @click="$emit('remove-pokemon-from-team', pokemon)">X</button>
       </li>
     </ul>
   </div>

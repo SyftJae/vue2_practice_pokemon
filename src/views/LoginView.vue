@@ -1,13 +1,11 @@
 <script>
-import { ref } from 'vue'
-import store from '../store'
-
 export default {
   name: "LoginView",
-  data: () => ({})
+  data: () => ({
+    loginInput: ""
+  })
 }
 
-const loginInput = ref("")
 </script>
 
 <template>
