@@ -1,23 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { DashboardView } from '../views/'
+import { LoginView, DashboardView } from '../views/'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'dashboard',
-    component: DashboardView
+    name: 'login',
+    component: LoginView
   },
-  // {
-  //   path: '/dashboard/:id',
-  //   name: 'dashboard',
-  //   component: DashboardView,
-  //   meta: {
-  //     requireAuth: true
-  //   }
-  // }
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashboardView,
+    // meta: {
+    //   requireAuth: true
+    // }
+  }
   // {
   //   path: '/about',
   //   name: 'about',

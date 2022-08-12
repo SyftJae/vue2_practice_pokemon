@@ -1,19 +1,27 @@
-<script>
-export default {
-  name: "LoginView",
-  data: () => ({
-    loginInput: ""
-  })
-}
-
-</script>
-
 <template>
 <div>
   <h2>Login</h2>
-  <form @submit.prevent ="store.user.login">
-    <input v-model="loginInput" placeholder="Username"/>
+  <form @submit.prevent ="login">
+    <input v-model="usernameInput" placeholder="Username"/>
     <button>Login</button>
   </form>
 </div>
 </template>
+
+<script>
+import router from '@/router';
+
+export default {
+  name: "LoginView",
+  data: () => ({
+    usernameInput: ""
+  }),
+  methods: {
+    login() {
+      console.log("login!")
+      router.push('dashboard')
+    },
+  },
+}
+
+</script>
