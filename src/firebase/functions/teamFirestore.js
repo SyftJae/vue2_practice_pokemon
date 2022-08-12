@@ -14,12 +14,12 @@ const teamFirestore = {
     let doc = await addDoc(this.teamRef, { ...relevantData })
     return {
       ...relevantData,
-      "documentId": doc.id
+      "docId": doc.id
     }
   },
 
   removePokemonFromTeam: async function(pokemon) {
-    const pokeRef = doc(this.teamRef, pokemon.documentId)
+    const pokeRef = doc(this.teamRef, pokemon.docId)
     await deleteDoc(pokeRef)
   },     
 

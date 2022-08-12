@@ -29,7 +29,7 @@ export default {
     async removePokemonFromTeam(pokemon) {
       await teamFirestore.removePokemonFromTeam(pokemon)
       this.team = this.team.filter((p) => {
-        return p.documentId != pokemon.documentId
+        return p.docId != pokemon.docId
       })
     },     
 
@@ -38,7 +38,7 @@ export default {
       let temp = []
       querySnapshot.forEach((doc) => {
         temp.push({
-          'documentId': doc.id,
+          'docId': doc.id,
           ...doc.data()
         })
       })
