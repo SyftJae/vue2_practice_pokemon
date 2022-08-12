@@ -1,12 +1,14 @@
 <script>
 import { SearchCard, ListCard } from '../components'
-// import { db } from '../firebase'
+import { db } from '../firebase'
 // import { collection, addDoc, doc, deleteDoc, query, getDocs } from 'firebase/firestore'
+import { collection, addDoc, query, getDocs, deleteDoc, doc } from 'firebase/firestore'
 
 export default {
   name: "DashboardView",
   data: () => ({
     team: [],
+    teamRef: collection(db, 'team')
   }),
   components: { SearchCard, ListCard },
   methods: {
@@ -19,9 +21,9 @@ export default {
           nickname: "",
           types: pokemon.types,
         }
-        // let doc = await addDoc(teamRef, { ...relevantData })
+        let doc = await addDoc(this.teamRef, { ...relevantData })
         this.team.push({
-          // 'documentId': doc.id,
+          'documentId': doc.id,
           ...relevantData
         })
       }
@@ -30,10 +32,24 @@ export default {
       this.team = this.team.filter((p) => {
         return p.documentId != pokemon.documentId
       })
-      // const pokeRef = doc(db, "team", pokemon.documentId)
-      // await deleteDoc(pokeRef)
-    }
-    
+      const pokeRef = doc(this.teamRef, pokemon.documentId)
+      await deleteDoc(pokeRef)
+    },     
+    async getTeam() {
+      let q = query(this.teamRef)
+      const querySnapshot = await getDocs(q)
+      let temp = []
+      querySnapshot.forEach((doc) => {
+        temp.push({
+          'documentId': doc.id,
+          ...doc.data()
+        })
+      })
+      this.team = [...temp]
+    }, 
+  },
+  mounted() {
+    this.getTeam()
   }
 }
 // function debug(log) {
@@ -43,6 +59,7 @@ export default {
 // onMounted(() => {
 //   store.team.getTeam()
 // })
+
 </script>
 
 <template>
