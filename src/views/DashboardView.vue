@@ -8,42 +8,33 @@
 
 <script>
 import { SearchCard, ListCard } from '../components'
-import { db } from '../firebase'
-import { collection, addDoc, query, getDocs, deleteDoc, doc } from 'firebase/firestore'
+import { teamFirestore } from '@/firebase/functions'
 
 export default {
   name: "DashboardView",
   data: () => ({
     team: [],
-    teamRef: collection(db, 'team')
   }),
   components: { SearchCard, ListCard },
   methods: {
     async addPokemonToTeam(pokemon) {
       if(this.team.length < 6) {
-        let relevantData = {
-          id: pokemon.id,
-          name: pokemon.name,
-          nickname: "",
-          types: pokemon.types,
-        }
-        let doc = await addDoc(this.teamRef, { ...relevantData })
+        let doc = await teamFirestore.addPokemonToTeam(pokemon)
         this.team.push({
-          'documentId': doc.id,
-          ...relevantData
+          ...doc
         })
       }
     },
+
     async removePokemonFromTeam(pokemon) {
+      await teamFirestore.removePokemonFromTeam(pokemon)
       this.team = this.team.filter((p) => {
         return p.documentId != pokemon.documentId
       })
-      const pokeRef = doc(this.teamRef, pokemon.documentId)
-      await deleteDoc(pokeRef)
     },     
+
     async getTeam() {
-      let q = query(this.teamRef)
-      const querySnapshot = await getDocs(q)
+      let querySnapshot = await teamFirestore.getTeam()
       let temp = []
       querySnapshot.forEach((doc) => {
         temp.push({
