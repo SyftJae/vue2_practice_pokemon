@@ -1,9 +1,9 @@
 <template>
 <v-row justify="center">
-  <v-card outlined elevation="2" max-height="35%" max-width="30%">
+  <v-card class="loginCard" outlined elevation="2">
     <v-card-title>Login</v-card-title>
     <form @submit.prevent ="login">
-      <input v-model="usernameInput" placeholder="Username"/>
+      <v-text-field v-model="usernameInput" placeholder="Username"/>
       <v-card-actions>Login</v-card-actions>
     </form>
   </v-card>
@@ -28,3 +28,8 @@ export default {
 }
 
 </script>
+
+<style lang="scss" scoped>
+  @import './LoginView.scss';
+</style>
+
