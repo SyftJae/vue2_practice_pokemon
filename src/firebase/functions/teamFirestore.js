@@ -1,17 +1,20 @@
 import { db } from '../index.js'
-import { collection, addDoc, query, getDocs, deleteDoc, doc } from 'firebase/firestore'
+import { collection, query, getDocs, deleteDoc, doc, setDoc } from 'firebase/firestore'
 
 const teamFirestore = {
   teamRef: collection(db, 'team'),
 
   addPokemonToTeam: async function(pokemon) {
+    let docRef = doc(this.teamRef)
     let relevantData = {
+      docId: docRef.id,
       id: pokemon.id,
       name: pokemon.name,
       nickname: "",
       types: pokemon.types,
+      sprites: pokemon.sprites
     }
-    let doc = await addDoc(this.teamRef, { ...relevantData })
+    let doc = await setDoc(docRef, { ...relevantData })
     return {
       ...relevantData,
       "docId": doc.id

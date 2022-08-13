@@ -4,4 +4,8 @@ const teamMutations = {
   "SET_TEAM": "SET_TEAM"
 }
 
-export { teamMutations }
+const userMutations = {
+  "ADD_NEW_USER": "ADD_NEW_USER"
+}
+
+export { teamMutations, userMutations }

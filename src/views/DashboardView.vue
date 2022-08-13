@@ -1,9 +1,14 @@
 <template>
-  <div>
-    <h1>Pokemon</h1>
-    <SearchCard v-on:add-pokemon-to-team="(pokemon) => addPokemonToTeam(pokemon)"/>
-    <ListCard v-on:remove-pokemon-from-team="(pokemon) => removePokemonFromTeam(pokemon)" :team="team"/>
-  </div>
+  <v-container fluid class="fill-height">
+    <v-row class="dashboard" justify="center">
+      <v-col cols="8">
+        <v-card class="dashboardCard">
+          <SearchCard v-on:add-pokemon-to-team="(pokemon) => addPokemonToTeam(pokemon)"/>
+          <ListCard v-on:remove-pokemon-from-team="(pokemon) => removePokemonFromTeam(pokemon)" :team="team"/>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
