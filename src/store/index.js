@@ -26,7 +26,6 @@ export default new Vuex.Store({
     },
 
     [teamMutations.REMOVE_POKEMON_FROM_TEAM](state, pokemon) {
-      console.log(state.team)
       state.team = state.team.filter((p) => {
         return p.docId != pokemon.docId
       })
@@ -42,12 +41,14 @@ export default new Vuex.Store({
       if(state.team.length < 6) {
         let doc = await teamFirestore.addPokemonToTeam(pokemon)
         commit(teamMutations.ADD_POKEMON_TO_TEAM, doc)
+        return doc
       }
     },
 
     async removePokemonFromTeam({ commit }, pokemon) {
       await teamFirestore.removePokemonFromTeam(pokemon)
       commit(teamMutations.REMOVE_POKEMON_FROM_TEAM, pokemon)
+      return pokemon
     },
     
     async getTeam({ commit }) {

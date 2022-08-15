@@ -14,10 +14,9 @@ const teamFirestore = {
       types: pokemon.types,
       sprites: pokemon.sprites
     }
-    let doc = await setDoc(docRef, { ...relevantData })
+    await setDoc(docRef, { ...relevantData })
     return {
       ...relevantData,
-      "docId": doc.id
     }
   },
 
