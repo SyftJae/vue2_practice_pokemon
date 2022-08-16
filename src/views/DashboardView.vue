@@ -75,6 +75,7 @@ export default {
     undoTeamHistory: function() {
       let self = this
       let prevHistory = self.undoHistory()
+      console.log(prevHistory)
       if (prevHistory) {
         if (prevHistory.action === "ADD") {
           self.removePokemonFromTeam(prevHistory.doc)
@@ -90,7 +91,9 @@ export default {
       let self = this
 
       let redoHistory = self.redoHistory()
-      
+      console.log(self.history)
+      console.log(redoHistory)
+      console.log(self.position)
       if (redoHistory) {
         if (redoHistory.action === "ADD") {
           self.addPokemonToTeam(redoHistory.doc)

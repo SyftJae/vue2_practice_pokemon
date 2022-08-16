@@ -5,7 +5,12 @@ const teamFirestore = {
   teamRef: collection(db, 'team'),
 
   addPokemonToTeam: async function(pokemon) {
-    let docRef = doc(this.teamRef)
+    let docRef
+    if ("docId" in pokemon) {
+      docRef = doc(this.teamRef, pokemon.docId)
+    } else {
+      docRef = doc(this.teamRef)
+    }
     let relevantData = {
       docId: docRef.id,
       id: pokemon.id,

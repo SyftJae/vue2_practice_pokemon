@@ -29,7 +29,6 @@ export default new Vuex.Store({
       state.team = state.team.filter((p) => {
         return p.docId != pokemon.docId
       })
-      console.log(state.team)
     },     
 
     [teamMutations.SET_TEAM](state, newTeam) {
